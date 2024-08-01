@@ -26,13 +26,25 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 const database = getDatabase(app); // Initialize Realtime Database
 
+/**
+export const app = initializeApp(firebaseConfig);
+export const analytics = getAnalytics(app);
+export const auth = getAuth(app);
+export const db = getFirestore(app);
+export const storage = getStorage(app);
+export const database = getDatabase(app); // Initialize Realtime Database
+ */
+
+
 
 // Auth state listener
 onAuthStateChanged(auth, user => {
   if (user) {
+    LocalStorage.set('user',user)
     console.log('User is signed in:', user);
     // Perform any additional actions based on the authenticated user
   } else {
+    LocalStorage.remove('user')
     console.log('No user is signed in.');
     // Perform any additional actions based on the unauthenticated state
   }
