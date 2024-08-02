@@ -95,5 +95,25 @@
       console.error('Registration error:', error);
     }
   }
- }
+ };
+
+/**
+
+ onMounted(() => {
+  // Check authentication status on component mount
+  console.log('sdad');
+  const auth = getAuth();
+
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      // User is logged in, redirect to the dashboard
+      router.push('/my');
+    }
+  });
+});
+
+ */
+
+
+
  </script>
