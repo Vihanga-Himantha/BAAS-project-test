@@ -12,6 +12,9 @@
         </q-toolbar-title>
         <q-btn flat dense round icon="brightness_6" @click="toggleDarkMode"></q-btn>
 
+        <q-separator dark vertical />
+
+
 
         <q-separator dark vertical />
         <router-link to="/register" class="router-link">
@@ -32,6 +35,8 @@
 <script>
 import { Dark } from 'quasar'
 
+
+
 export default {
   name: 'MainLayout',
   data () {
@@ -48,6 +53,10 @@ export default {
     }
   }
 }
+
+
+
+
 </script>
 
 <style>
