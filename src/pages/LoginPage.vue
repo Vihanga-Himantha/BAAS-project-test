@@ -62,8 +62,11 @@
  </template>
 
  <script setup>
- import { ref, reactive } from 'vue'
+ import { ref, reactive, onMounted } from 'vue'
+ import { useRouter } from 'vue-router'
+ import { Notify, Loading } from 'quasar'
  import login from 'src/firebase/firebase-login'
+ import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
  const user = reactive({
   email: null,
@@ -71,13 +74,38 @@
  })
 
  const form = ref(null)
+ const router = useRouter()
 
  const submit = async () => {
   if (form.value.validate()) {
-  try {
-   await login(user)
-   router.push('/app')
-  } catch (err) {}
- }
- }
+    try {
+      Loading.show()
+      const loggedInUser = await login(user)
+      Loading.hide()
+      if (loggedInUser) {
+        Notify.create({
+          type: 'positive',
+          message: 'Login successful!'
+        })
+        router.push('/registered') // Redirect to the desired route after login
+      }
+    } catch (error) {
+      Loading.hide()
+      Notify.create({
+        type: 'negative',
+        message: error.message
+      })
+      console.error('Login error:', error)
+    }
+  }
+}
+
+onMounted(() => {
+  const auth = getAuth()
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      router.push('/registered') // Redirect to the desired route if already logged in
+    }
+  })
+})
  </script>
