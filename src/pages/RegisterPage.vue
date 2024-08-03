@@ -61,7 +61,7 @@
  </template>
 
 <script setup>
- import { ref, reactive } from 'vue';
+ import { ref, reactive, onMounted } from 'vue';
  import { useRouter } from 'vue-router';
  import { Notify } from 'quasar';
  import { register } from 'src/firebase/firebase-register';
@@ -75,6 +75,7 @@
  })
 
  const form = ref(null)
+ const router = useRouter();
 
  const submit = async () => {
   if (form.value.validate()) {
@@ -85,7 +86,7 @@
           type: 'positive',
           message: 'Registration successful!'
         });
-        router.push('/my');
+        router.push('/registered');
       }
     } catch (error) {
       Notify.create({
@@ -95,24 +96,21 @@
       console.error('Registration error:', error);
     }
   }
- };
+ }
 
-/**
 
- onMounted(() => {
-  // Check authentication status on component mount
-  console.log('sdad');
-  const auth = getAuth();
+//  onMounted(() => {
+//   // Check authentication status on component mount
+//   console.log('sdad');
+//   const auth = getAuth();
 
-  auth.onAuthStateChanged((user) => {
-    if (user) {
-      // User is logged in, redirect to the dashboard
-      router.push('/my');
-    }
-  });
-});
-
- */
+//   auth.onAuthStateChanged((user) => {
+//     if (user) {
+//       // User is logged in, redirect to the dashboard
+//       router.push('/registered');
+//     }
+//   });
+// });
 
 
 
